@@ -1,0 +1,24 @@
+version: "3.5"
+
+services:
+  web:
+    container_name: my-snippet08
+    build: ./
+    ports:
+      - "8000:8000"
+    environment:
+      DD_DB_HOST: db
+    command: /server
+    depends_on:
+      - db
+  db:
+    container_name: my-snippet08-db
+    image: postgres:12.2-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: qwe123
+      POSTGRES_DB: snippetbox
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
